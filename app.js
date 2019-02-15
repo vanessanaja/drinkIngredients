@@ -37,8 +37,33 @@ const drinksSchema = new mongoose.Schema({
   strMeasure8: String
 });
 
+const Drink = mongoose.model("Drink", drinksSchema); 
+
+// Drink.create({
+//     strDrink: "Granite Hill", 
+//     strDrinkThumb: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg",
+//     strInstructions: "A great campground"
+// }, function(err, drink){
+//     if(err){
+//         console.log(err);
+//     } else {
+//         console.log("newly created drink");
+//         console.log(drink);
+//     }
+// });
+
 app.get('/', function(req, res){
   res.render('index');
+});
+
+app.get('/drinks', function(req, res){
+  Drink.find({}, function(err, allDrinks){
+      if(err){
+          console.log(err);
+      } else {
+          res.render('drinks', {drinks: allDrinks});
+      }
+  });    
 });
 
 app.get('*', function(req, res){

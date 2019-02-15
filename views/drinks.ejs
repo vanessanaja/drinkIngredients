@@ -1,0 +1,20 @@
+<h1>You've reached the drinks page</h1>
+<!-- <h1><%= drinks.strDrink %></h1>
+
+<img src="<%= drinks.strDrinkThumb %>">
+
+<p><%= drinks.strInstructions %></p> -->
+
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+  <% drinks.forEach(function(drink){ %>
+      <div class="col-md-3 col-sm-6">
+          <div class="thumbnail">
+              <img src='<%= drink.strDrinkThumb %>'>
+              <div class="caption">
+                  <h4><%= drink.strDrink %></h4>
+              </div>
+              <p><%= drink.strInstructions %></p>
+          </div>
+      </div>
+  <% }); %>
+</div>
