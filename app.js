@@ -39,32 +39,21 @@ const drinksSchema = new mongoose.Schema({
 
 const Drink = mongoose.model("Drink", drinksSchema); 
 
-// Drink.create({
-//     strDrink: "Granite Hill", 
-//     strDrinkThumb: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg",
-//     strInstructions: "A great campground"
-// }, function(err, drink){
-//     if(err){
-//         console.log(err);
-//     } else {
-//         console.log("newly created drink");
-//         console.log(drink);
-//     }
-// });
-
 app.get('/', function(req, res){
   res.render('index');
 });
 
-app.get('/drinks', function(req, res){
-  Drink.find({}, function(err, allDrinks){
+app.post('/drinks', function(req, res){
+  let ingredients = '"' + req.body.ingredients + '"';
+   Drink.find({$text: {$search: ingredients}}, function(err, foundDrinks){
       if(err){
           console.log(err);
       } else {
-          res.render('drinks', {drinks: allDrinks});
+          res.render('drinks', {drinks: foundDrinks});
       }
-  });    
+  });   
 });
+
 
 app.get('*', function(req, res){
   res.send('Page not found!');
