@@ -1,6 +1,7 @@
 const express = require('express'),
       app = express(),
       bodyParser = require('body-parser'),
+      flash = require('connect-flash');
       ejs = require('ejs'),
       methodOverride = require('method-override'),
       mongoose = require('mongoose');
@@ -11,6 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride('_method'));
+app.use(flash());
 
 const drinksSchema = new mongoose.Schema({
   strDrink: String,
@@ -43,31 +45,16 @@ app.get('/', function(req, res){
   res.render('index');
 });
 
-// app.post('/drinks', function(req, res){
-//   let ingredients = '"' + req.body.ingredients + '"';
-//    Drink.find({$text: {$search: ingredients}}, function(err, foundDrinks){
-//       if(err){
-//           console.log(err);
-//       } else {
-//           res.render('drinks', {drinks: foundDrinks});
-//       }
-//   });   
-// });
-
 app.post('/drinks', function(req, res){
-  let ingredientsValue = [req.body.ingredients];
-  let ingredientsString = (JSON.stringify(req.body.ingredients));
-  let ingredients = ingredientsString.replace(/,/g, '" "');
-   
+  let ingredients = (JSON.stringify(req.body.ingredients).replace(/,/g, '" "'));
   Drink.find({$text: {$search: ingredients}}, function(err, foundDrinks){
-      if(err){
-          console.log(err);
+      if(err|| !foundDrinks){
+        console.log(err);
       } else {
           res.render('drinks', {drinks: foundDrinks});
       }
   });   
 });
-
 
 app.get('*', function(req, res){
   res.send('Page not found!');
