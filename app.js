@@ -41,11 +41,11 @@ const drinksSchema = new mongoose.Schema({
 
 const Drink = mongoose.model("Drink", drinksSchema); 
 
-app.get('/', function(req, res){
-  res.render('index');
-});
+app.get('/', (req, res)=>
+  res.render('index')
+);
 
-app.post('/drinks', function(req, res){
+app.post('/drinks', (req, res)=>{
   let ingredients = (JSON.stringify(req.body.ingredients).replace(/,/g, '" "'));
   Drink.find({$text: {$search: ingredients}}, function(err, foundDrinks){
       if(err|| !foundDrinks){
@@ -56,10 +56,10 @@ app.post('/drinks', function(req, res){
   });   
 });
 
-app.get('*', function(req, res){
-  res.send('Page not found!');
-});
+app.get('*', (req, res)=>
+  res.send('Page not found!')
+);
 
-app.listen(3000, function(){
-  console.log('server started');
-});
+app.listen(3000, ()=>
+  console.log('server started')
+);
