@@ -43,9 +43,23 @@ app.get('/', function(req, res){
   res.render('index');
 });
 
+// app.post('/drinks', function(req, res){
+//   let ingredients = '"' + req.body.ingredients + '"';
+//    Drink.find({$text: {$search: ingredients}}, function(err, foundDrinks){
+//       if(err){
+//           console.log(err);
+//       } else {
+//           res.render('drinks', {drinks: foundDrinks});
+//       }
+//   });   
+// });
+
 app.post('/drinks', function(req, res){
-  let ingredients = '"' + req.body.ingredients + '"';
-   Drink.find({$text: {$search: ingredients}}, function(err, foundDrinks){
+  let ingredientsValue = [req.body.ingredients];
+  let ingredientsString = (JSON.stringify(req.body.ingredients));
+  let ingredients = ingredientsString.replace(/,/g, '" "');
+   
+  Drink.find({$text: {$search: ingredients}}, function(err, foundDrinks){
       if(err){
           console.log(err);
       } else {
