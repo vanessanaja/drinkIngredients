@@ -1,0 +1,10 @@
+<% include partials/header %>
+<h1>What drinks can you make with your favorite ingredients?</h1>
+
+<form action="/drinks" method="POST">
+  <label for="ingredients">Ingredients separated by commas:</label>
+  <input type="text" id="ingredients" name="ingredients" placeholder="ingredients">
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+<% include partials/footer %>

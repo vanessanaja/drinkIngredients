@@ -1,0 +1,23 @@
+<% include partials/header %>
+
+<form action="/drinks" method="POST" style="padding-left: 20px">
+  <label for="ingredients">Search again</label>
+  <input type="text" id="ingredients" name="ingredients" placeholder="">
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+<div class="row text-center" style="display:flex; flex-wrap: wrap; padding-left: 20px">
+  <% drinks.forEach(function(drink){ %>
+      <div class="col-md-3 col-sm-6">
+          <div class="thumbnail">
+              <img src='<%= drink.strDrinkThumb %>'>
+              <div class="caption">
+                  <h4><%= drink.strDrink %></h4>
+              </div>
+              <p><%= drink.strInstructions %></p>
+          </div>
+      </div>
+  <% }); %>
+</div>
+
+<% include partials/footer %>
