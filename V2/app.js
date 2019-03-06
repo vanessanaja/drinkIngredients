@@ -56,6 +56,10 @@ app.post('/drinks', (req, res)=>{
   });   
 });
 
+app.get('/drinks/new', function(req, res){
+  res.render('new'); 
+});
+
 app.get('*', (req, res)=>
   res.send('Page not found!')
 );
